@@ -1,6 +1,10 @@
 Version history
 ===============
 
+1.3 (2019-11-08):
+
+- changed: updated to embed 3.4.2
+
 1.2.1 (2018-03-08):
 
 - fixed: PHP warnings when passing a non string value to Processor
