@@ -211,6 +211,13 @@ class Process {
 		
 		$url = elgg_trigger_plugin_hook('replace_url', 'oembed', ['url' => $url], $url);
 		
+      // Hack 2021/06/02 Youtube n'est plus traité par défaut alors on fait un petit contournement
+      if (preg_match('/youtube.com\/.*v=([a-zA-Z0-9]+)|youtu.?be.?c?o?m?\/?.*\/([a-zA-Z0-9]+)/',$url,$youtube)) {
+         // Si une adresse youtube est trouvée on extrait l'identifiant
+         $youtube = preg_grep('/^[a-z0-9]+$/i',$youtube);
+         if(count($youtube)==1)
+            return '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.array_pop($youtube).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin-left:auto; margin-right:auto"></iframe>';
+      }
 		$adapter = $this->getAdapter($url);
 		if (empty($adapter)) {
 			return;
